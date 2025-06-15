@@ -2,10 +2,15 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from "next/dynamic"; // ✅ Add this import
 import "easymde/dist/easymde.min.css";
 import Footer from "../components/Footer";
-import toast from "react-hot-toast"; // ✅ Toast library
+import toast from "react-hot-toast";
+
+// ✅ Dynamic import SimpleMDE (this prevents server-side rendering issues)
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false, // This tells Next.js: "Don't render this on the server!"
+});
 
 export default function CreatePost() {
   const { data: session } = useSession();
