@@ -3,8 +3,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from "next/dynamic"; // ✅ Add this import
 import "easymde/dist/easymde.min.css";
+
+// ✅ Dynamic import SimpleMDE (prevents server-side rendering issues)
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false, // This tells Next.js: "Don't render this on the server!"
+});
 
 export default function EditPost() {
   const router = useRouter();
